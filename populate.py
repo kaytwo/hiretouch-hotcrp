@@ -202,6 +202,7 @@ def main():
     num_pages = pypdftk.get_num_pages(fname)
     if app_record.get(uid,0) == num_pages:
       print "%s (%s) unchanged number of pages, skipping" % (uid, name)
+      os.unlink(fname)
     else:
       print "%s (%s) new/changed" % (uid, name)
       print "oldnum: %d\nnewnum: %d" % (app_record.get(uid,0),num_pages)
