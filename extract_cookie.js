@@ -4,7 +4,7 @@ require('dotenv').config();
 const START_PAGE = 'https://appserv6.admin.uillinois.edu/appslogin/servlet/appslogin?appName=edu.uillinois.aits.HireTouchHelper';
 
 (async () => {
-    const browser = await puppeteer.launch(); // {headless: false});
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     const page = await browser.newPage();
     await page.goto(START_PAGE);
 
