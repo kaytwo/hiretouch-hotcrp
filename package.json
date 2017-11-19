@@ -1,0 +1,10 @@
+{
+  "name": "hiretouch-to-hotcrp",
+  "version": "1.0.0",
+  "main": "extract_cookie.js",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "puppeteer": "^0.13.0"
+  }
+}
