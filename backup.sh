@@ -1,5 +1,5 @@
 #!/bin/bash
-docker run -ti -d --rm google/cloud-sdk gcloud compute --project=loyal-parser-163116 disks snapshot new-webserver --zone=us-central1-c --snapshot-names=backup-`date +%Y%m%d`
+docker run -ti --rm --name gcloud-config google/cloud-sdk gcloud compute --project=loyal-parser-163116 disks snapshot new-webserver --zone=us-central1-c --snapshot-names=backup-`date +%Y%m%d`
 
 cd /home/ckanich/hiretouch-hotcrp
 
