@@ -68,7 +68,8 @@ def create_applicant(name,uid,url,fname):
   response = br.submit()
   resp = response.read()
   if resp.find('confirm">Submitted submission') != -1:
-    print "successful:",uid
+    print "successful (removing pdf):",uid
+    os.unlink(fname)
   else:
     print "unsuccessful:",uid
     print resp[:200]
@@ -186,7 +187,7 @@ def main():
     br = mechanize.Browser()
     br.addheaders = [('Cookie',curlline)]
     br.set_handle_robots(False)
-    br.open(pdfurl)
+    br.open(pdfurl,timeout=30.0)
     br.select_form(nr=0)
     response=br.submit()
     file_content = response.read()
@@ -202,6 +203,7 @@ def main():
     num_pages = pypdftk.get_num_pages(fname)
     if app_record.get(uid,0) == num_pages:
       print "%s (%s) unchanged number of pages, skipping" % (uid, name)
+      os.unlink(fname)
     else:
       print "%s (%s) new/changed" % (uid, name)
       print "oldnum: %d\nnewnum: %d" % (app_record.get(uid,0),num_pages)
