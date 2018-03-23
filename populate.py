@@ -90,7 +90,7 @@ def completed_applicants(pagetext):
       namecell =  item.select('td:nth-of-type(2) a')[0]
       pdfcell = item.select('td:nth-of-type(8) a')[0]
       url = namecell.get('href')
-      name = namecell.get_text()
+      name = namecell.get_text().encode('ascii','ignore').decode('ascii')
       pdfurl = pdfcell.get('href')
       yield (name,url,pdfurl)
 
@@ -187,7 +187,7 @@ def main():
     br = mechanize.Browser()
     br.addheaders = [('Cookie',curlline)]
     br.set_handle_robots(False)
-    br.open(pdfurl,timeout=30.0)
+    br.open(pdfurl,timeout=120.0)
     br.select_form(nr=0)
     response=br.submit()
     file_content = response.read()
@@ -200,8 +200,11 @@ def main():
     
     # accumulate updates for full pass on applicants
     
-    num_pages = pypdftk.get_num_pages(fname)
-    if app_record.get(uid,0) == num_pages:
+    try:
+      num_pages = pypdftk.get_num_pages(fname)
+    except:
+      num_pages = -1
+    if num_pages > 0 and app_record.get(uid,0) == num_pages:
       print "%s (%s) unchanged number of pages, skipping" % (uid, name)
       os.unlink(fname)
     else:
