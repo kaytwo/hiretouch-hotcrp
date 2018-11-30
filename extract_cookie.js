@@ -12,7 +12,7 @@ const START_PAGE = 'https://appserv6.admin.uillinois.edu/appslogin/servlet/appsl
     await page.keyboard.type(process.env.NETID);
     await page.click('#easpass');
     await page.keyboard.type(process.env.PASSWORD);
-    await page.click('#easFormId > input');
+    await page.click('form > input.bttn');
     await page.waitForNavigation();
     console.log((await page.cookies()).map(
         (x) => x.name + '=' + x.value).reduce(

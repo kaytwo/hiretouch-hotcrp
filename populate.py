@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 import mechanize
 
 from dotenv import load_dotenv, find_dotenv
-load_dotenv(find_dotenv())
+load_dotenv(dotenv_path='.env')
 
 if sys.platform == 'darwin':
   environ['PDFTK_PATH'] = '/usr/local/bin/pdftk'
@@ -64,7 +64,8 @@ def create_applicant(name,uid,url,fname):
   br['auemail1'] = environ.get("ROBOT_USERNAME")
   br['auaff1']   = name
   br['opt1'] = url 
-  br.form.add_file(open(fname),'application/pdf',fname,nr=0)
+  br.form.new_control('file', "paperUpload", {'id':"paperUpload"})
+  br.form.add_file(open(fname),'application/pdf',fname,id="paperUpload")
   response = br.submit()
   resp = response.read()
   if resp.find('confirm">Submitted submission') != -1:
@@ -89,7 +90,7 @@ def completed_applicants(pagetext):
     if len( item.select('canvas[title*=Completed]')) == 1:
       namecell =  item.select('td:nth-of-type(2) a')[0]
       pdfcell = item.select('td:nth-of-type(8) a')[0]
-      url = namecell.get('href')
+      url = namecell.get('href').replace('&','&amp;');
       name = namecell.get_text().encode('ascii','ignore').decode('ascii')
       pdfurl = pdfcell.get('href')
       yield (name,url,pdfurl)
