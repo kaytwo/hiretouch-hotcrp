@@ -29,7 +29,9 @@ This is a job application.
 '''
 
 
-print "did you turn submissions back on???"
+def is_paperform(form):
+    return "id" in form.attrs and form.attrs['id'] == "paperform"
+
 
 def login():
 
@@ -58,7 +60,7 @@ def create_applicant(name,uid,url,fname):
       resp = br.follow_link(link)
       break
 
-  br.select_form(nr=1)
+  br.select_form(predicate=is_paperform)
   br['title'] = name
   br['auname1']  = uid
   br['auemail1'] = environ.get("ROBOT_USERNAME")
@@ -127,11 +129,12 @@ def update_applicants(updates):
     # print link
     br.follow_link(link)
     try:
-      br.select_form(nr=2)
+      br.select_form(predicate=is_paperform)
       this_url = br['opt1']
       if this_url in updates:
         name, uid, fname = updates[this_url]
-        br.form.add_file(open(fname),'application/pdf',fname,nr=0)
+        br.form.new_control('file', "paperUpload", {'id':"paperUpload"})
+        br.form.add_file(open(fname),'application/pdf',fname,id="paperUpload")
         response = br.submit()
         print "updated and deleting file for %s (%s)"% (name,uid)
         os.unlink(fname)
