@@ -38,7 +38,7 @@ def login():
   br = mechanize.Browser()
   br.set_handle_robots(False)
   print "opening search page"
-  br.open(environ.get("HOTCRP_URL"))
+  br.open(str(environ.get("HOTCRP_URL")))
   br.select_form(nr=0)
   br['email']=environ.get("ROBOT_USERNAME")
   br['password']=environ.get("ROBOT_PASSWORD")
