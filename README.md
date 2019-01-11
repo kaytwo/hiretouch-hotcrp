@@ -3,9 +3,11 @@
 #### setup TLDR
 
 * Install hotCRP, add a user that will submit application packets
-* add secrets to `dotenv-template`, rename to `.env`
-* Install node, python2, and needed language packages (`npm install` & `pip install -r requirements.txt`)
+* add `URL` option to the submission form of type text. This needs to be the first custom field added.
+* add secrets/configuration to `dotenv-template`, rename to `.env`
+* Install pdftk, node, python2, and needed language packages (`npm install` & `pip install -r requirements.txt`)
 * Fix the working directory in `backup.sh` and add it as a daily cron job.
+* For recent Ubuntu/Debian, `pdftk` cannot be installed from default apt: https://askubuntu.com/questions/1028522/how-can-i-install-pdftk-in-ubuntu-18-04-and-later
 
 
 #### Goal/architecture
