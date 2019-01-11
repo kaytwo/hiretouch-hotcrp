@@ -33,3 +33,7 @@ Install https://github.com/kohler/hotcrp and create a user account that will be 
 `extract_cookie.js` loads the UIC hiretouch page, logs in using the username from `.env`, and then extracts the cookie from the cookie jar so that automated requests can be made to the HireTouch server. If you do not want to save your UIC credentials on the virtual machine, you can run `node extract_cookie.js > curloutput` someplace else, and then copy that file (which has an auth cookie in it) to the VM. I don't know how long that cookie lasts before it expires, but it's certainly more than a few hours.
 
 `populate.py` is a horrible spaghetti code abomination that has grown over the past few years of slight changes to hotCRP and hiretouch. As of January 2019 it doesn't cause errors on any of the couple hundred applications it's been used to download, but that can always change.
+
+#### Debugging
+
+Regretfully "ask Chris to look at it" might be the best plan at this point. The output of the populate script has some basic print debugging, and `backup.sh` saves this to the text file `last_populate` so that may be of use.
